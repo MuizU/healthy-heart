@@ -17,8 +17,8 @@ export default function Home() {
         response.text()
       );
       const rows = csvData.split("\n").slice(1); // Exclude header row
-      const randomRowIndex = Math.floor(Math.random() * rows.length);
-      const randomRow = rows[randomRowIndex]
+      const randomRowIndex = Math.floor(Math.random() * rows.length); // make
+      const randomRow = rows[randomRowIndex] // make it 0
         .split(",")
         .slice(0, -1)
         .map(Number);
