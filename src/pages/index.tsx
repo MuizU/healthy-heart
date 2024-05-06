@@ -20,6 +20,7 @@ export default function Home() {
       const randomRowIndex = Math.floor(Math.random() * rows.length);
       const randomRow = rows[randomRowIndex]
         .split(",")
+        .slice(0, -1)
         .map(Number);
 
       const response = await axios.post("/api/classify", {
@@ -70,7 +71,7 @@ export default function Home() {
         {analysisResult && (
           <div>
             <h2>Analysis Result:</h2>
-            <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
+            <pre>{JSON.stringify(analysisResult)}</pre>
           </div>
         )}
       </main>
