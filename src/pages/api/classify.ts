@@ -28,7 +28,7 @@ export default async function handler(
   }
 }
 
-const classify = async (inputData: number[][]): Promise<number[][]> => {
+const classify = async (inputData: number[][]): Promise<number[]> => {
   const inputTensor = tf.tensor3d(
     [inputData.map((value) => [value])],
     [1, inputData.length, 1]
@@ -39,7 +39,7 @@ const classify = async (inputData: number[][]): Promise<number[][]> => {
   }
 
   const predictions = model.predict(inputTensor) as tf.Tensor;
-  const result = predictions.argMax(-1)
+  const result = predictions.argMax(-1).dataSync();
 
-  return result;
+  return Array.from(result);
 };
