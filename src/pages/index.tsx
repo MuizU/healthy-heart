@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import { useState } from "react";
 import axios from "axios";
-import { headers } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +11,6 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
   const [selectedRow, setSelectedRow] = useState<number[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const headersList = headers();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
