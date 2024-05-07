@@ -10,14 +10,14 @@ const Header = (): JSX.Element => {
             Healthy<span>Heart</span>
           </a>
         </h1>
-        <nav>
+        {/* <nav>
           <a href="#">Home</a>
           <a href="#">Blog</a>
           <a href="#">Pricing</a>
           <a href="#">About</a>
           <a href="#">Faq</a>
           <a href="#">Contact</a>
-        </nav>
+        </nav> */}
       </div>
     </header>
   );
