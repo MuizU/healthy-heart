@@ -28,7 +28,7 @@ export default async function handler(
   }
 }
 
-const classify = async (inputData: number[][]): Promise<number[]> => {
+const classify = async (inputData: number[]): Promise<number[]> => {
   const inputTensor = tf.tensor3d(
     [inputData.map((value) => [value])],
     [1, inputData.length, 1]
