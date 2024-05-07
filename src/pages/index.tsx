@@ -82,7 +82,7 @@ export default function Home() {
 
           {analysisResult && (
             <div className={styles.result}>
-              <h2>Analysis Result:</h2>
+              <h2>ECG Result:</h2>
               <pre>{analysisResult}</pre>
             </div>
           )}
