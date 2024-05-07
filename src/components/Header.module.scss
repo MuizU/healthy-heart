@@ -17,9 +17,6 @@
   margin: 0 auto;
 }
 
-/*	The header placeholder. It is displayed when the header is fixed to the top of the
-	browser window, in order to prevent the content of the page from jumping up. */
-
 .headerFixed-placeholder {
   height: 80px;
   display: none;
@@ -120,9 +117,3 @@ body.fixed .headerFixed .headerLimiter nav {
     font-size: 13px;
   }
 }
-
-/*
-	 We are clearing the body's margin and padding, so that the header fits properly.
-	 We are also adding a height to demonstrate the scrolling behavior. You can remove
-	 these styles.
- */
