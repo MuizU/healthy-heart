@@ -1,7 +1,7 @@
 "use client";
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.scss";
 import { useState } from "react";
 import axios from "axios";
 
@@ -10,15 +10,20 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
+  };
   const handleAnalyzeClick = async () => {
+    if (!file) return;
+
     try {
-      const csvData = await fetch("/ECG5000_TRAIN.csv").then((response) =>
-        response.text()
-      );
+      const csvData = await file.text();
       const rows = csvData.split("\n").slice(1); // Exclude header row
-      const randomRowIndex = Math.floor(Math.random() * rows.length); // make
-      const randomRow = rows[randomRowIndex] // make it 0
+      const randomRow = rows[0] // make it 0
         .split(",")
         .slice(0, -1)
         .map(Number);
@@ -27,9 +32,26 @@ export default function Home() {
         data: randomRow,
       });
       setSelectedRow(randomRow);
-      setAnalysisResult(response.data.result[0]);
+      setAnalysisResult(getResult(response.data.result[0]));
     } catch (error) {
-      console.error("Error analyzing data:", error);
+      setAnalysisResult("Invalid file");
+    }
+  };
+
+  const getResult = (index: number) => {
+    switch (index) {
+      case 0:
+        return "Normal (N)";
+      case 1:
+        return "R-on-T Premature Ventricular Contraction (R-on-T PVC)";
+      case 2:
+        return "Premature Ventricular Contraction (PVC)";
+      case 3:
+        return "Supra-ventricular Premature or Ectopic Beat (SP or EB)";
+      case 4:
+        return "Unclassified Beat (UB)";
+      default:
+        return "unknown";
     }
   };
 
@@ -42,38 +64,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.grid}>
-          <button onClick={handleAnalyzeClick}>
-            {!selectedRow ? "Click to process" : "processing...."}
+        <div className={styles.container}>
+          <h1 className={styles.title}>ECG Analysis</h1>
+          <input
+            type="file"
+            accept=".csv"
+            onChange={handleFileUpload}
+            className={styles.fileInput}
+          />
+          <button
+            className={styles.button}
+            onClick={handleAnalyzeClick}
+            disabled={!file}
+          >
+            {!selectedRow ? "Upload and Analyze" : "Upload another report"}
           </button>
+
+          {analysisResult && (
+            <div className={styles.result}>
+              <h2>Analysis Result:</h2>
+              <pre>{analysisResult}</pre>
+            </div>
+          )}
         </div>
-        {selectedRow && (
-          <div>
-            <h2>Selected Row:</h2>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  {selectedRow.map((_, index) => (
-                    <th key={index}>Column {index + 1}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {selectedRow.map((cell, index) => (
-                    <td key={index}>{cell}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        )}
-        {analysisResult && (
-          <div>
-            <h2>Analysis Result:</h2>
-            <pre>{JSON.stringify(analysisResult)}</pre>
-          </div>
-        )}
       </main>
     </>
   );
