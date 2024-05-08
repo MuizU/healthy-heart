@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.19.0",
-    "@tensorflow/tfjs-node": "^4.19.0",
+    "@types/node-fetch": "^2.6.11",
     "axios": "^1.6.8",
     "next": "14.0.3",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.77.0",
