@@ -11,6 +11,7 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [showMetrics, setShowMetrics] = useState(false);
+  const [key, setKey] = useState(0);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -55,9 +56,13 @@ export default function Home() {
   };
 
   const resetForm = () => {
-    setFile(null);
-    setAnalysisResult("");
-    setShowMetrics(false);
+    if (!!analysisResult) {
+      setFile(null);
+      setAnalysisResult("");
+      setShowMetrics(false);
+      const newKey = key + 1;
+      setKey(newKey);
+    }
   };
 
   return (
@@ -73,7 +78,7 @@ export default function Home() {
           <h1 className={styles.title}>ECG Analysis</h1>
           <input
             type="file"
-            key={Number(file)}
+            key={key}
             accept=".csv"
             onChange={handleFileUpload}
             className={styles.fileInput}
