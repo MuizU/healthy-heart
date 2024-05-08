@@ -72,6 +72,7 @@ export default function Home() {
           <h1 className={styles.title}>ECG Analysis</h1>
           <input
             type="file"
+            key={Number(file)}
             accept=".csv"
             onChange={handleFileUpload}
             className={styles.fileInput}
