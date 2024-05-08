@@ -2,7 +2,9 @@ import * as tf from "@tensorflow/tfjs";
 import fs from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+console.log("before model declaration");
 let model: tf.LayersModel | null = null;
+console.log("before model load");
 
 const loadModel = async () => {
   model = await tf.loadLayersModel("file://public/model.json");
