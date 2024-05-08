@@ -1,17 +1,14 @@
-import * as tf from "@tensorflow/tfjs";
-import fs from "fs";
+import * as tf from '@tensorflow/tfjs-node';
+
 import type { NextApiRequest, NextApiResponse } from "next";
 
-console.log("before model declaration");
 let model: tf.LayersModel | null = null;
-console.log("before model load");
 
 const loadModel = async () => {
   model = await tf.loadLayersModel("file://public/model.json");
 };
 
 loadModel();
-console.log("before handler");
 
 export default async function handler(
   req: NextApiRequest,
