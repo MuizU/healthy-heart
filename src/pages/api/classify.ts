@@ -9,22 +9,23 @@ const loadModel = async () => {
 };
 
 loadModel();
+console.log("before handler");
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-   res.setHeader("Access-Control-Allow-Origin", "*");
-   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") {
     res.status(200).end();
     return;
   }
-
+  console.log("before post");
   if (req.method === "POST") {
+    console.log("after post");
     try {
       const inputData = req.body.data.map(Number);
       const result = await classify(inputData);
