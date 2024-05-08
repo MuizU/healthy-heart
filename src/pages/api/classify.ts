@@ -1,14 +1,8 @@
-import * as tf from '@tensorflow/tfjs-node';
+import * as tf from "@tensorflow/tfjs-node";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
 let model: tf.LayersModel | null = null;
-
-const loadModel = async () => {
-  model = await tf.loadLayersModel("file://public/model.json");
-};
-
-loadModel();
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,7 +18,13 @@ export default async function handler(
   }
   console.log("before post");
   if (req.method === "POST") {
-    console.log("after post");
+    const tf = await import("@tensorflow/tfjs-node");
+    const loadModel = async () => {
+      model = await tf.loadLayersModel("file://public/model.json");
+    };
+
+    loadModel();
+
     try {
       const inputData = req.body.data.map(Number);
       const result = await classify(inputData);
