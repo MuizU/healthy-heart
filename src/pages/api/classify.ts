@@ -35,8 +35,7 @@ export default async function handler(
       const result = await classify(inputData);
       res.status(200).json({ result });
     } catch (error) {
-      console.log("error: ", error);
-      res.status(500).json({ error: "failed to classify" });
+      res.status(500).json({ error: `${error}` });
     }
   } else {
     res.status(405).end();
