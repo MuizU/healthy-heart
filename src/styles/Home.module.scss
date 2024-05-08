@@ -43,6 +43,10 @@
   background-color: #005bb5;
 }
 
+.button:disabled{
+  background-color: grey;
+}
+
 .result {
   margin-top: 20px;
   text-align: center;
@@ -56,4 +60,26 @@
   .button {
     font-size: 1.25rem;
   }
+
+}
+
+.toggleButton {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.metrics {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.metrics h3 {
+  margin-top: 0;
 }

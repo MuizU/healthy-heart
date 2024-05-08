@@ -11,6 +11,7 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
   const [selectedRow, setSelectedRow] = useState<number[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [showMetrics, setShowMetrics] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -72,6 +73,22 @@ export default function Home() {
             onChange={handleFileUpload}
             className={styles.fileInput}
           />
+          <button
+            className={styles.toggleButton}
+            onClick={() => setShowMetrics(!showMetrics)}
+          >
+            {showMetrics ? "Hide Metrics" : "Show Metrics"}
+          </button>
+          {showMetrics && (
+            <div className={styles.metrics}>
+              <h3>Metrics</h3>
+              <p>Precision: 0.9261</p>
+              <p>Recall: 0.941</p>
+              <p>Accuracy: 0.941</p>
+              <p>F1 Score: 0.9304</p>
+              <p>Balanced Accuracy: 0.5006</p>
+            </div>
+          )}
           <button
             className={styles.button}
             onClick={handleAnalyzeClick}
