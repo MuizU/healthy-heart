@@ -9,7 +9,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [analysisResult, setAnalysisResult] = useState("");
-  const [selectedRow, setSelectedRow] = useState<number[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [showMetrics, setShowMetrics] = useState(false);
 
@@ -32,7 +31,6 @@ export default function Home() {
       const response = await axios.post("/api/classify", {
         data: randomRow,
       });
-      setSelectedRow(randomRow);
       setAnalysisResult(getResult(response.data.result[0]));
     } catch (error) {
       setAnalysisResult("Invalid file");
@@ -54,6 +52,11 @@ export default function Home() {
       default:
         return "unknown";
     }
+  };
+
+  const resetForm = () => {
+    setFile(null);
+    setAnalysisResult("");
   };
 
   return (
@@ -89,14 +92,20 @@ export default function Home() {
               <p>Balanced Accuracy: 0.5006</p>
             </div>
           )}
-          <button
-            className={styles.button}
-            onClick={handleAnalyzeClick}
-            disabled={!file}
-          >
-            {!selectedRow ? "Upload and Analyze" : "Upload another report"}
-          </button>
-
+          {(!file || (!!file && !analysisResult)) && (
+            <button
+              className={styles.button}
+              onClick={handleAnalyzeClick}
+              disabled={!file}
+            >
+              Upload and Analyze
+            </button>
+          )}
+          {!!file && !!analysisResult && (
+            <button className={styles.button} onClick={resetForm}>
+              Reset
+            </button>
+          )}
           {analysisResult && (
             <div className={styles.result}>
               <h2>ECG Result:</h2>
