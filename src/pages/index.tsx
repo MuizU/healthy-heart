@@ -57,6 +57,7 @@ export default function Home() {
   const resetForm = () => {
     setFile(null);
     setAnalysisResult("");
+    setShowMetrics(false);
   };
 
   return (
